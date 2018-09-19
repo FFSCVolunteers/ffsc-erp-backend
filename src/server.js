@@ -58,6 +58,10 @@ app.post('/auth/login', (req, res) => {
   });
 });
 
+app.get('/ping', (req, res) => {
+  res.send("ok");
+})
+
 let port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Started up at port ${port}`);
