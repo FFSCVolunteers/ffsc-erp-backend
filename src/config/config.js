@@ -1,39 +1,23 @@
-let env = process.env.NODE_ENV || 'development';
-require('dotenv').config();
-
-let config = {
+module.exports = {
   development: {
-    db: {
-      host: process.env.DB_HOST,
-      name: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      pass: process.env.DB_PASS,
-    },
+    username: 'root',
+    password: 'admin',
+    database: 'ffsc',
+    host: '127.0.0.1',
+    dialect: 'mysql',
   },
-  unit_test: {
-    db: {
-      host: process.env.UNIT_TEST_DB_HOST,
-      name: process.env.UNIT_TEST_DB_NAME,
-      user: process.env.UNIT_TEST_DB_USER,
-      pass: process.env.UNIT_TEST_DB_PASS,
-    },
-  },
-  staging: {
-    db: {
-      host: process.env.DB_HOST,
-      name: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      pass: process.env.DB_PASS,
-    },
+  test: {
+    username: process.env.CI_DB_USERNAME,
+    password: process.env.CI_DB_PASSWORD,
+    database: process.env.CI_DB_NAME,
+    host: '127.0.0.1',
+    dialect: 'mysql',
   },
   production: {
-    db: {
-      host: process.env.DB_HOST,
-      name: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      pass: process.env.DB_PASS,
-    },
+    username: process.env.PROD_DB_USERNAME,
+    password: process.env.PROD_DB_PASSWORD,
+    database: process.env.PROD_DB_NAME,
+    host: process.env.PROD_DB_HOSTNAME,
+    dialect: 'mysql',
   },
 };
-
-module.exports = config[env];

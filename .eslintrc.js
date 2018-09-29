@@ -29,5 +29,6 @@ module.exports = {
           "error",
           120
         ],
+        "new-cap": "off",
     }
 };
