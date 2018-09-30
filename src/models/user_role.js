@@ -22,18 +22,16 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     freezeTableName: true,
     tableName: 'user_role',
-    classMethods: {
-      associate: function(models) {
-        UserRole.belongsTo(models.User, {
-          foreignKey: 'user_id',
-          onDelete: 'RESTRICT',
-        });
-        UserRole.belongsTo(models.Role, {
-          foreignKey: 'role_id',
-          onDelete: 'RESTRICT',
-        });
-      },
-    },
   });
+  UserRole.associate = function(models) {
+    UserRole.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      onDelete: 'RESTRICT',
+    });
+    UserRole.belongsTo(models.Role, {
+      foreignKey: 'role_id',
+      onDelete: 'RESTRICT',
+    });
+  };
   return UserRole;
 };

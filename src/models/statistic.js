@@ -42,18 +42,16 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     freezeTableName: true,
     tableName: 'statistic',
-    classMethods: {
-      associate: function(models) {
-        Statistic.belongsTo(models.Center, {
-          foreignKey: 'center_id',
-          onDelete: 'RESTRICT',
-        });
-        Statistic.belongsTo(models.User, {
-          foreignKey: 'inputted_by',
-          onDelete: 'RESTRICT',
-        });
-      },
-    },
   });
+  Statistic.associate = function(models) {
+    Statistic.belongsTo(models.Center, {
+      foreignKey: 'center_id',
+      onDelete: 'RESTRICT',
+    });
+    Statistic.belongsTo(models.User, {
+      foreignKey: 'inputted_by',
+      onDelete: 'RESTRICT',
+    });
+  };
   return Statistic;
 };

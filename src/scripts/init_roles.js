@@ -1,4 +1,4 @@
-const Role = require('./models').Role;
+const Role = require('../models').Role;
 const _ = require('lodash');
 
 Role.findById(1).then((role) => {

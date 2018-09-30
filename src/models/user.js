@@ -1,5 +1,8 @@
 'use strict';
 const bcrypt = require('bcryptjs');
+const Consts = require('../components/consts.js');
+const randomToken = require('random-token').create(Consts.RANDOM_SALT);
+
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define('User', {
     id: {
@@ -44,6 +47,27 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     freezeTableName: true,
     tableName: 'user',
+  });
+  User.hook('afterValidate', (user, options) => {
+    if (user.isNewRecord) {
+      return new Promise((resolve, reject) => {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(String(user.password), salt, (err, hash) => {
+            if (err) {
+              reject(err);
+            } else {
+              user.password = hash;
+              resolve();
+            }
+          });
+        });
+      });
+    }
+  });
+  User.hook('beforeValidate', (user, options) => {
+    if (user.isNewRecord) {
+      user.token = randomToken(Consts.TOKEN_LENGTH);
+    }
   });
   User.authenticate = function(email, password) {
     let invalidMsg = 'Invalid credential';
