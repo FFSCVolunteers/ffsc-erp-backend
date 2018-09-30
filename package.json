@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=unit_test node_modules/.bin/mocha **/*.test.js",
     "dev": "./node_modules/.bin/nodemon src/server.js",
-    "init": "node src/init.js"
+    "init": "node src/scripts/init_roles.js"
   },
   "repository": {
     "type": "git",
