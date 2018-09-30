@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     year: {
       type: DataTypes.SMALLINT(5),

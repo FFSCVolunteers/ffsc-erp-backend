@@ -1,9 +1,11 @@
 'use strict';
+const bcrypt = require('bcryptjs');
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     first_name: {
       type: DataTypes.STRING,
@@ -43,5 +45,23 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     tableName: 'user',
   });
+  User.authenticate = function(email, password) {
+    let invalidMsg = 'Invalid credential';
+    return new Promise((resolve, reject) => {
+      User.findOne({
+        where: {email: email},
+      }).then((user) => {
+        bcrypt.compare(password, user.password, function(err, match) {
+          if (match) {
+            resolve(user);
+          } else {
+            reject(invalidMsg);
+          }
+        });
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  };
   return User;
 };
