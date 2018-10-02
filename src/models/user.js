@@ -87,5 +87,10 @@ module.exports = function(sequelize, DataTypes) {
       });
     });
   };
+  User.findByToken = function(token) {
+    return User.findOne({
+      where: {token: token},
+    });
+  };
   return User;
 };

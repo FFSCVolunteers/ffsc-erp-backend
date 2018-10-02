@@ -1,4 +1,4 @@
-const User = require('../models/user.js');
+const User = require('../models').User;
 const _ = require('lodash');
 
 const message = 'Invalid credential';

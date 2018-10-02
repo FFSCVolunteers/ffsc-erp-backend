@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING(50),
       },
       center_id: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
           model: 'center',

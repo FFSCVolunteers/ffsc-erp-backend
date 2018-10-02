@@ -6,7 +6,7 @@ let app = express();
 app.use(BodyParser.json());
 
 require('./routes')(app);
-app.post('/auth/login', require('./controllers').auth.login);
+//app.post('/auth/login', require('./controllers').auth.login);
 
 let port = process.env.PORT;
 app.listen(port, () => {

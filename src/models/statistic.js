@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     center_id: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: true,
+      allowNull: false,
     },
     number_of_new_students: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -53,5 +53,11 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: 'RESTRICT',
     });
   };
+
+  Statistic.hook('beforeValidate', (model, options) => {
+    if (model.isNewRecord) {
+      model.month_year = [model.month, model.year].join('-');
+    }
+  });
   return Statistic;
 };
