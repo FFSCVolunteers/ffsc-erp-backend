@@ -43,6 +43,11 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     tableName: 'statistic',
   });
+
+  const formatMonthYear = (month, year) => {
+    return [month, year].join('-');
+  };
+
   Statistic.associate = function(models) {
     Statistic.belongsTo(models.Center, {
       foreignKey: 'center_id',
@@ -56,8 +61,33 @@ module.exports = function(sequelize, DataTypes) {
 
   Statistic.hook('beforeValidate', (model, options) => {
     if (model.isNewRecord) {
-      model.month_year = [model.month, model.year].join('-');
+      model.month_year = formatMonthYear(model.month, model.year);
     }
   });
+
+  Statistic.findByMonthYear = function(month, year) {
+    if (!month || !year) {
+      throw new Error('Both month and year should be present');
+    }
+    let monthYear = formatMonthYear(month, year);
+    let model = Statistic.findOne({
+      where: {month_year: monthYear},
+    });
+    return model;
+  };
+
+  Statistic.prototype.formatData = function() {
+    return {
+      month: this.month,
+      year: this.year,
+      stats: {
+        number_of_new_students: this.number_of_new_students,
+        number_of_scholarships: this.number_of_scholarships,
+        number_of_excellent_students: this.number_of_excellent_students,
+      },
+      center_id: this.center_id,
+    };
+  };
+
   return Statistic;
 };

@@ -3,17 +3,9 @@ const Statistic = require('../models').Statistic;
 const Sequelize = require('sequelize');
 
 module.exports = {
-  create: (req, res) => {
+  createOrUpdate: (req, res) => {
     let body = _.pick(req.body, ['month', 'year', 'center_id', 'stats']);
-    Statistic.create({
-      month: req.body.month,
-      year: req.body.year,
-      number_of_new_students: body.stats.number_of_new_students,
-      number_of_scholarships: body.stats.number_of_scholarships,
-      number_of_excellent_students: body.stats.number_of_excellent_students,
-      center_id: body.center_id,
-      inputted_by: req.user.id,
-    }).then((stat) => {
+    let sendResult = (stat) => {
       res.send({
         id: stat.id,
         month: stat.month,
@@ -25,9 +17,54 @@ module.exports = {
         },
         center_id: stat.center_id,
       });
-    }).catch(Sequelize.ValidationError, (err) => {
-      let msg = err.errors[0].message;
-      res.status(400).send({message: msg});
+    };
+    let data = {
+      month: req.body.month,
+      year: req.body.year,
+      number_of_new_students: body.stats.number_of_new_students,
+      number_of_scholarships: body.stats.number_of_scholarships,
+      number_of_excellent_students: body.stats.number_of_excellent_students,
+      center_id: body.center_id,
+      inputted_by: req.user.id,
+    };
+    Statistic.findByMonthYear(req.body.month, req.body.year).then((model) => {
+      if (model) {
+        model.update(data).then((stat) => {
+          sendResult(stat);
+        }).catch(Sequelize.ValidationError, (err) => {
+          let msg = err.errors[0].message;
+          res.status(400).send({message: msg});
+        });
+      } else {
+        Statistic.create(data).then((stat) => {
+          sendResult(stat);
+        }).catch(Sequelize.ValidationError, (err) => {
+          let msg = err.errors[0].message;
+          res.status(400).send({message: msg});
+        });
+      }
+    });
+  },
+  get: (req, res) => {
+    let params = req.params;
+    Statistic.findOne({
+      where: {id: params.id},
+    }).then((stat) => {
+      if (stat) {
+        res.send(stat.formatData());
+      } else {
+        res.status(404).send(null);
+      }
+    });
+  },
+  getByMonthYear: (req, res) => {
+    let params = req.params;
+    Statistic.findByMonthYear(params.month, params.year).then((stat) => {
+      if (stat) {
+        res.send(stat.formatData());
+      } else {
+        res.status(404).send(null);
+      }
     });
   },
 };
