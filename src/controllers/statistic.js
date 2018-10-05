@@ -27,7 +27,7 @@ module.exports = {
       center_id: body.center_id,
       inputted_by: req.user.id,
     };
-    Statistic.findByMonthYear(req.body.month, req.body.year).then((model) => {
+    Statistic.findByMonthYear(req.body.month, req.body.year, req.body.center_id).then((model) => {
       if (model) {
         model.update(data).then((stat) => {
           sendResult(stat);
