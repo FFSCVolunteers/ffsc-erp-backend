@@ -82,7 +82,7 @@ module.exports = function(sequelize, DataTypes) {
       year: this.year,
       stats: {
         number_of_new_students: this.number_of_new_students,
-        number_of_scholarships: this.number_of_scholarships,
+        number_of_new_scholarships: this.number_of_new_scholarships,
         number_of_excellent_students: this.number_of_excellent_students,
       },
       center_id: this.center_id,
