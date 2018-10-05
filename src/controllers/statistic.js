@@ -12,7 +12,7 @@ module.exports = {
         year: stat.year,
         stats: {
           number_of_new_students: stat.number_of_new_students,
-          number_of_scholarships: stat.number_of_scholarships,
+          number_of_new_scholarships: stat.number_of_new_scholarships,
           number_of_excellent_students: stat.number_of_excellent_students,
         },
         center_id: stat.center_id,
@@ -22,7 +22,7 @@ module.exports = {
       month: req.body.month,
       year: req.body.year,
       number_of_new_students: body.stats.number_of_new_students,
-      number_of_scholarships: body.stats.number_of_scholarships,
+      number_of_new_scholarships: body.stats.number_of_new_scholarships,
       number_of_excellent_students: body.stats.number_of_excellent_students,
       center_id: body.center_id,
       inputted_by: req.user.id,
