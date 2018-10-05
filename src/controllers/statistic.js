@@ -59,7 +59,7 @@ module.exports = {
   },
   getByMonthYear: (req, res) => {
     let params = req.params;
-    Statistic.findByMonthYear(params.month, params.year).then((stat) => {
+    Statistic.findByMonthYear(params.month, params.year, params.center_id).then((stat) => {
       if (stat) {
         res.send(stat.formatData());
       } else {

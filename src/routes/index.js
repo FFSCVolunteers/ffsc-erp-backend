@@ -7,5 +7,5 @@ module.exports = (app) => {
   app.post('/auth/register', authController.register);
   app.put('/stats', auth, statisticController.createOrUpdate);
   app.get('/stats/:id', auth, statisticController.get);
-  app.get('/stats/:month/:year', auth, statisticController.getByMonthYear);
+  app.get('/stats/:center_id/:month/:year', auth, statisticController.getByMonthYear);
 };

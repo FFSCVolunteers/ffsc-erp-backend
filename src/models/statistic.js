@@ -65,13 +65,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Statistic.findByMonthYear = function(month, year) {
+  Statistic.findByMonthYear = function(month, year, center_id) {
     if (!month || !year) {
       throw new Error('Both month and year should be present');
     }
     let monthYear = formatMonthYear(month, year);
     let model = Statistic.findOne({
-      where: {month_year: monthYear},
+      where: {month_year: monthYear, center_id: center_id},
     });
     return model;
   };
