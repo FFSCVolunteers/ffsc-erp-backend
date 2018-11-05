@@ -1,5 +1,5 @@
-const auth = require('./auth.js');
-const statistic = require('./statistic.js');
+const auth = require('./auth');
+const statistic = require('./statistic');
 module.exports = {
   auth,
   statistic,

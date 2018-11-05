@@ -36,6 +36,8 @@
     "yargs": "^12.0.2"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "eslint": "^5.5.0",
     "eslint-config-google": "^0.9.1",
     "expect": "^23.5.0",
